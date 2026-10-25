@@ -1,0 +1,9 @@
+# 사이트와 무관한 작업 자료
+00_포트폴리오정리/
+.claude/
+
+# OS / 에디터
+Thumbs.db
+.DS_Store
+desktop.ini
+*.tmp
