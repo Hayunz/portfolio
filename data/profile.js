@@ -12,36 +12,23 @@ window.PROFILE = {
   github: "", // 예: "https://github.com/아이디"
   resumePdf: "", // 예: "assets/files/resume.pdf"
 
-  // 홈 상단 인포그래픽. 확인된 사실만 넣습니다 (추정치 금지).
-  // viz: covers(작품 썸네일) · ring(전체 중 몇) · medals(수상 목록) · pins(장소 목록) · dots(사람 수)
-  stats: [
-    { n: "6", label: "완성한 VR · MR 작품", sub: "2023 – 2026 · 전부 전시나 공모전으로 공개", viz: "covers" },
-    { n: "3", label: "공모전 수상", sub: "", viz: "medals", items: ["2025 대상 · 부총리 겸 과기정통부 장관상", "2023 대상 · 부총리 겸 교육부장관상", "2026 최우수상 · VIVEN 해커톤"] },
-    { n: "1,000명+", label: "콘텐츠를 체험한 사람", sub: "전시 4회 · 쇼케이스 · 공모전 시연 누적 · 점 하나 = 10명", viz: "crowd", total: 100 }, // TODO: 집계 근거 메모해 두기
-  ],
-
-  // 할 수 있는 것. 홈 'What I do'와 About에 같이 쓰입니다.
-  // detail: 한 줄 설명, evidence: 이 역량으로 실제로 한 일 (홈에서 근거로 표시)
+  // 할 수 있는 것. About 'What I do'에 쓰입니다. detail: 한 줄 설명
   capabilities: [
     {
       title: "경험 기획",
       detail: "관객이 처음부터 끝까지 무엇을 보고 하게 될지 설계하고 기획서로 정리합니다.", // TODO: 문장 다듬기
-      evidence: ["Sailors 세계관 · 시나리오 · 레벨 구성", "불씨 설문 설계 (초등 40명)", "DayDream 체험 흐름 · 손 인터랙션 10곳"],
     },
     {
       title: "XR 구현",
       detail: "Unity와 Unreal로 VR · AR 인터랙션과 콘텐츠를 직접 만들어 완성합니다.",
-      evidence: ["5개 작품 프로그래밍 단독 담당", "OpenXR 핸드 트래킹 (불씨 · DayDream)", "MR 모드 (Crumbi), VFX Graph 포인트 클라우드 (Nostalgia)"],
     },
     {
       title: "영상 · 연출",
       detail: "Premiere Pro와 After Effects로 콘텐츠 영상과 연출을 만듭니다.",
-      evidence: ["Nostalgia VR 인터랙티브 영상", "영인산산림박물관 상영 영상", "K컬쳐 박람회 미디어아트 영상"],
     },
     {
       title: "전시 · 현장",
       detail: "박물관, 아트센터, 박람회 현장에 콘텐츠를 걸고 운영해 봤습니다.",
-      evidence: ["DayDream 쇼케이스 3일 · 부스 3대 운영 시스템", "졸업전시 2회 (Sailors · Nostalgia)", "유관순 연구소 자문 · 유저 테스트 반영 (불씨)"],
     },
   ],
 

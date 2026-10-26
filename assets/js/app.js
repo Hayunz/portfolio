@@ -85,39 +85,6 @@
     return parts.length ? `<p class="team-line">${parts.map(esc).join(" · ")}</p>` : "";
   }
 
-  function stats() {
-    if (!has(P.stats)) return "";
-    const featured = PROJECTS.filter((p) => p.featured);
-    const viz = (x) => {
-      switch (x.viz) {
-        case "covers":
-          return `<div class="viz covers">${featured.map((p) => `<a href="${projectUrl(p)}" title="${esc(p.title)}">${cover(p)}</a>`).join("")}</div>`;
-        case "ring": {
-          const n = parseInt(x.n, 10), of = x.of || n, r = 26, c = 2 * Math.PI * r;
-          return `<div class="viz ring"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="${r}" class="bg"/><circle cx="32" cy="32" r="${r}" class="fg" style="stroke-dasharray:${c};stroke-dashoffset:${c * (1 - n / of)}"/></svg><span>${n} / ${of}</span></div>`;
-        }
-        case "medals":
-          return `<ul class="viz medals">${(x.items || []).map((t, i) => `<li><i>${i < 2 ? "🏆" : "🥇"}</i>${esc(t)}</li>`).join("")}</ul>`;
-        case "pins":
-          return `<ul class="viz pins">${(x.items || []).map((t) => `<li>${esc(t)}</li>`).join("")}</ul>`;
-        case "dots":
-          return `<div class="viz dots" aria-hidden="true">${"<i></i>".repeat(x.total || 0)}</div>`;
-        case "crowd":
-          return `<div class="viz crowd" aria-hidden="true">${"<i></i>".repeat(x.total || 0)}</div>`;
-        default:
-          return "";
-      }
-    };
-    return `<div class="stats">${P.stats
-      .map((x) => `<div class="stat stat-${esc(x.viz || "plain")}">
-        <span class="label">${esc(x.label)}</span>
-        <strong>${esc(x.n)}</strong>
-        ${viz(x)}
-        ${x.sub ? `<small>${esc(x.sub)}</small>` : ""}
-      </div>`)
-      .join("")}</div>`;
-  }
-
   // 2023–2026 타임라인: 작품마다 제작 기간을 막대로. 시작일이 없는 작품은 완료 시점만 점으로
   function projectTimeline() {
     const items = PROJECTS.filter((p) => p.featured && p.meta && p.meta.period);
@@ -137,29 +104,11 @@
     return `<div class="tl"><div class="tl-row tl-head"><span></span><div class="tl-years">${years}</div></div>${rows.join("")}</div>`;
   }
 
-  // withEvidence: 홈에서는 설명 대신 '실제로 한 일'을 근거로 보여 줌
-  function capabilities(withEvidence) {
+  function capabilities() {
     if (!has(P.capabilities)) return "";
     return `<div class="caps">${P.capabilities
       .map((c, i) => `<div class="cap"><span class="num">0${i + 1}</span><h3>${esc(c.title)}</h3>
-        ${withEvidence && has(c.evidence) ? `<ul class="evidence">${c.evidence.map((e) => `<li>${esc(e)}</li>`).join("")}</ul>` : `<p>${esc(c.detail)}</p>`}</div>`)
-      .join("")}</div>`;
-  }
-
-  // 기술 스택을 '몇 작품에서 썼는지'로 — 능숙도 막대 대신 실제 사용 횟수
-  function techUsage() {
-    // 메인에 보이는 작품(6개) 기준, 기술로 볼 수 있는 태그만 셈
-    const TECH = ["Unity", "Unreal", "VR", "MR", "AR", "Hand Tracking", "VFX Graph", "HDRP", "URP", "Timeline"];
-    const count = new Map();
-    PROJECTS.forEach((p) => (p.tags || []).forEach((t) => {
-      const k = t.replace(/\s*\d+$/, "");
-      if (TECH.includes(k)) count.set(k, (count.get(k) || 0) + 1);
-    }));
-    const rows = [...count.entries()].sort((a, b) => b[1] - a[1] || TECH.indexOf(a[0]) - TECH.indexOf(b[0])).slice(0, 8);
-    if (!rows.length) return "";
-    const max = rows[0][1];
-    return `<div class="tech"><p class="tech-note">숫자는 그 기술을 쓴 작품 수예요.</p>${rows
-      .map(([k, n]) => `<div class="tech-row"><span>${esc(k)}</span><i style="--w:${(n / max) * 100}%"></i><b>${n}</b></div>`)
+        <p>${esc(c.detail)}</p></div>`)
       .join("")}</div>`;
   }
 
@@ -236,25 +185,9 @@
             <a class="btn" href="about.html">About</a>
             ${P.resumePdf ? `<a class="btn" href="${esc(P.resumePdf)}" target="_blank">이력서 PDF</a>` : ""}
           </div>
-          <a class="scroll-cue" href="#what" aria-label="아래로 스크롤">Scroll</a>
+          <a class="scroll-cue" href="#work" aria-label="아래로 스크롤">Scroll</a>
         </div>
       </section>
-
-      ${has(P.stats) ? `<section class="section stats-sec" id="what"><div class="container">
-        <h2 class="section-title">한눈에</h2>
-        ${stats()}
-      </div></section>` : ""}
-
-      ${has(P.capabilities) ? `
-      <section class="section"><div class="container">
-        <h2 class="section-title">What I do — 근거와 함께</h2>
-        ${capabilities(true)}
-      </div></section>` : ""}
-
-      <section class="section"><div class="container">
-        <h2 class="section-title">Tech — 작품에서 쓴 횟수</h2>
-        ${techUsage()}
-      </div></section>
 
       <section class="section" id="work"><div class="container">
         <div class="work-head">
