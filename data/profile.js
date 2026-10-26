@@ -102,7 +102,7 @@ window.PROFILE = {
     {
       group: "협업 · 문서",
       items: [
-        { name: "Git", can: "팀 저장소에서 브랜치 · 커밋으로 협업 (DayDream 1,100여 커밋 중 700여 개)", projects: ["daydream", "crumbi"] },
+        { name: "Git", can: "팀 저장소에서 브랜치 · 커밋으로 협업", projects: ["daydream", "crumbi"] },
         { name: "Notion · PowerPoint · 한글", can: "기획서 · 시나리오 · 발표 자료 · 운영 문서 작성", projects: ["sailors", "tryde", "bulssi"] },
       ],
     },
