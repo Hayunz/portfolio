@@ -4,10 +4,8 @@ window.PROFILE = {
   nameEn: "Hayun Kim",
   role: "XR Content Creator",
   headline: "확장된 세계에서 현존감을 느낄 수 있는 실감 콘텐츠를 만듭니다.",
-  // About 맨 위 자기소개. 문단은 빈 줄(\n\n)로 구분. TODO: 초안이에요, 본인 말로 다듬기
-  intro:
-    "실감 콘텐츠에 관심이 많습니다. 그중에서도 확장된 세계 안에서 '내가 정말 여기에 있다'고 느끼는 순간, 현존감을 만드는 일에 끌립니다.\n\n" +
-    "그 순간을 만들기 위해 기획부터 Unity · Unreal 구현, 영상 연출까지 직접 해 왔고, 공모전과 쇼케이스에서 사람들에게 선보여 왔습니다.",
+  // About 맨 위 자기소개. 비우면 표시 안 함. 문단은 빈 줄(\n\n)로 구분
+  intro: "",
   email: "khy4450@naver.com",
   github: "", // 예: "https://github.com/아이디"
   resumePdf: "", // 예: "assets/files/resume.pdf"
