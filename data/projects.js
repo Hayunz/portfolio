@@ -153,12 +153,11 @@ window.PROJECTS = [
       { src: "assets/images/daydream/story-04-spirit.jpg", caption: "Spirit Space — 신령의 손이 아이를 옮깁니다" },
       { src: "assets/images/daydream/story-05-cliff.jpg", caption: "Herb Cliff — 절벽 위의 약초" },
       { src: "assets/images/daydream/story-06-ending.jpg", caption: "Ending — 절벽을 오르는 아이" },
-      { src: "assets/images/daydream/booth-wide.jpg", caption: "2026 New Content Academy Showcase — DayDream 부스" },
+      { src: "assets/images/daydream/booth-wide.jpg", caption: "DayDream 부스" },
       { src: "assets/images/daydream/booth-action.jpg", caption: "쇼케이스 현장 체험" },
       { src: "assets/images/daydream/booth-installation.jpg", caption: "부스 설치" },
     ],
     results: [
-      "2026 New Content Academy Showcase 출품 (2026.08.19 – 08.21) — 한국콘텐츠진흥원 뉴콘텐츠아카데미",
       "Quest 3 부스 3대 독립 운영, 1인 체험 10~13분, 스테이지별 플레이타임 실측",
       "쇼케이스 이후 영어 자막 · 오디오 · 시선 유도를 보완해 추가 시연 준비 중",
     ],

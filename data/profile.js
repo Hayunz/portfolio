@@ -66,7 +66,6 @@ window.PROFILE = {
   ],
 
   education: [
-    { period: "2025.09 – 2026.08", title: "한국콘텐츠진흥원 뉴콘텐츠아카데미", detail: "교육생 · DayDream 개발 및 쇼케이스 (2026.08.19 – 08.21)" }, // TODO: 수료 시점 확인
     { period: "2021.03 – 2025.02", title: "상명대학교", detail: "AR·VR미디어디자인전공 졸업 · 3학년 과대표" }, // TODO: 과대표로 한 일 한 줄 추가
     { period: "2018.03 – 2021.02", title: "천안여자고등학교", detail: "졸업" },
   ],
@@ -79,7 +78,7 @@ window.PROFILE = {
       items: [
         { name: "Unity", can: "XR 인터랙션, Timeline 연출, 커스텀 셰이더 · VFX Graph, 물리 · NavMesh까지 콘텐츠 한 편을 끝까지 구현", projects: ["daydream", "crumbi", "sailors", "bulssi", "tryde", "nostalgia"] },
         { name: "C#", can: "게임 로직 · 상태 기계 · ScriptableObject 데이터 설계, 커스텀 Timeline 트랙과 에디터 툴", projects: ["crumbi", "daydream", "sailors"] },
-        { name: "Unreal Engine", can: "VR 콘텐츠 프로토타입 제작", note: "뉴콘텐츠아카데미 VR 노래방 (미공개)" },
+        { name: "Unreal Engine", can: "VR 콘텐츠 프로토타입 제작", note: "VR 노래방 (미공개)" },
         { name: "AI 코딩 에이전트", can: "Claude Code · Codex와 협업 규칙 · 검토 파이프라인을 세워 개발 속도를 높임", projects: ["daydream"] },
       ],
     },
