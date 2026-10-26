@@ -95,8 +95,9 @@
       const start = /^\d/.test(p.meta.period.trim()) ? d[0] : null;
       const end = d[d.length - 1];
       const left = ((start ?? end) / SPAN) * 100, width = start === null ? 0 : ((end - start + 1) / SPAN) * 100;
+      const name = esc(p.title.split(/:\s*/)[0]);
       return `<div class="tl-row">
-        <a class="tl-name" href="${projectUrl(p)}">${esc(p.title.split(/:\s*/)[0])}</a>
+        ${p.detail ? `<a class="tl-name" href="${projectUrl(p)}">${name}</a>` : `<span class="tl-name">${name}</span>`}
         <div class="tl-track">${start === null ? `<i class="tl-dot" style="left:${left}%" title="완료 ${esc(p.meta.period)}"></i>` : `<i class="tl-bar" style="left:${left}%;width:${width}%"></i>`}</div>
       </div>`;
     });

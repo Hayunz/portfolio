@@ -166,7 +166,7 @@ body[data-page="home"] .site-footer { border-top-color: var(--line); }
 .tl-years { display: grid; grid-template-columns: repeat(4, 1fr); font-size: 12px; color: var(--muted); }
 .tl-years span { border-left: 1px solid var(--line); padding-left: 6px; }
 .tl-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.tl-name:hover { color: var(--accent); }
+a.tl-name:hover { color: var(--accent); }
 .tl-track {
   position: relative; height: 14px; border-radius: 99px;
   background: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 25%);

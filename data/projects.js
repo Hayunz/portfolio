@@ -63,7 +63,7 @@ window.PROJECTS = [
     year: 2026,
     category: "xr",
     featured: true,
-    detail: true,
+    detail: false, // 일단 상세 페이지 닫아 둠 (다시 열려면 true)
     theme: { art: "dusk", accent: "#e8c47a", bg: "#140d08", text: "#f6ecd9", font: "elegant", tagline: "꿈에서 얻은 용기로, 아이는 마지막 절벽을 직접 오릅니다", hero: "assets/images/daydream/key-art.jpg" },
     award: "",
     summary: "아버지의 약초를 찾아 산을 오르는 아이의 꿈을, 신령의 손이 되어 손끝으로 함께 걸어가는 VR 인터랙티브 시네마",
