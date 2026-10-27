@@ -50,6 +50,12 @@
 //   gallery: [                   // 현장 · 과정: 체험 사진, 기획서, 스케치, 스토리보드
 //     { src: "", caption: "" },
 //   ],
+//   share: [                     // 기여도: 업무별 비중. 팀 작품은 100%로 뭉뚱그리지 말고 나눠서
+//     { area: "프로그래밍", value: "100%", note: "팀 5인 중 개발 1명" },
+//   ],
+//   numbers: [                   // 성과 숫자 3개 안팎: 큰 숫자 + 무엇을 셌는지(basis). 지어낸 숫자 금지
+//     { n: "40명", label: "유저 테스트", basis: "초등 5학년" },
+//   ],
 //   results: [],                 // 결과: 수상, 전시 장소 · 기간, 관람객 수, 반응
 //   links: [{ label: "기획서", url: "" }],
 // },
@@ -63,7 +69,7 @@ window.PROJECTS = [
     year: 2026,
     category: "xr",
     featured: true,
-    detail: false, // 일단 상세 페이지 닫아 둠 (다시 열려면 true)
+    detail: false,
     theme: { art: "dusk", accent: "#e8c47a", bg: "#140d08", text: "#f6ecd9", font: "elegant", tagline: "꿈에서 얻은 용기로, 아이는 마지막 절벽을 직접 오릅니다", hero: "assets/images/daydream/key-art.jpg" },
     award: "",
     summary: "아버지의 약초를 찾아 산을 오르는 아이의 꿈을, 신령의 손이 되어 손끝으로 함께 걸어가는 VR 인터랙티브 시네마",
@@ -157,6 +163,17 @@ window.PROJECTS = [
       { src: "assets/images/daydream/booth-action.jpg", caption: "쇼케이스 현장 체험" },
       { src: "assets/images/daydream/booth-installation.jpg", caption: "부스 설치" },
     ],
+    share: [
+      { area: "개발", value: "", note: "개발 1인 — 기획 팀원도 Unity 작업을 함께 해서 비중 확인 필요" }, // TODO
+      { area: "기획", value: "", note: "" }, // TODO
+      { area: "아트", value: "", note: "아트 담당 팀원" }, // TODO
+    ],
+    numbers: [
+      { n: "3일", label: "쇼케이스 현장 운영", basis: "2026.08.19 – 08.21" },
+      { n: "3대", label: "Quest 3 부스 독립 운영", basis: "부스별 시야 정렬 · 복구 키 · 플레이타임 기록" },
+      { n: "10곳", label: "손으로 진행하는 인터랙션", basis: "컨트롤러 없이 핀치만으로, 1인 체험 10~13분" },
+      { n: "", label: "체험 인원" }, // TODO: 부스 PC의 플레이타임 로그나 현장 집계로
+    ],
     results: [
       "Quest 3 부스 3대 독립 운영, 1인 체험 10~13분, 스테이지별 플레이타임 실측",
       "쇼케이스 이후 영어 자막 · 오디오 · 시선 유도를 보완해 추가 시연 준비 중",
@@ -247,6 +264,17 @@ window.PROJECTS = [
       { src: "assets/images/crumbi/story-1.jpg", caption: "세계관 소개 영상의 한 장면 — 크럼비는 지하 세계의 균형을 지키는 친구들" },
       { src: "assets/images/crumbi/mr.jpg", caption: "MR 모드 — 내 방에 온 크럼비" },
       { src: "assets/images/crumbi/sns.jpg", caption: "SNS 운영 — 크럼비 도감" },
+    ],
+    share: [
+      { area: "상호작용 설계", value: "100%", note: "실험 → 키워드 → 문장으로 깨우는 구조, 지층 퍼즐, MR 모드" },
+      { area: "프로그래밍", value: "100%", note: "팀 5인 중 개발 1명" },
+      { area: "세계관 · 기획", value: "", note: "" }, // TODO: 팀 공동이면 비중
+      { area: "아트", value: "0%", note: "캐릭터 · 배경 · 키 아트는 아트 팀 4명" },
+    ],
+    numbers: [
+      { n: "대상", label: "2025 가상융합서비스 개발자 경진대회", basis: "695팀 · 1,541명 참가 중 개발자 성인 부문 (전자신문 2025.11.19)" },
+      { n: "3일", label: "킨텍스 전시 부스 시연", basis: "2025.11 경기 고양 킨텍스, 관람객 대상" },
+      { n: "5종", label: "손으로 쓰는 실험 도구", basis: "버블러 · 망치 · 조흔판 · 드릴 · 자석" },
     ],
     results: [
       "2025 가상융합서비스 개발자 경진대회 개발자 부문 성인 분야 대상 — 부총리 겸 과학기술정보통신부 장관상 (주최 과학기술정보통신부)",
@@ -339,6 +367,17 @@ window.PROJECTS = [
       { src: "assets/images/tryde/undersea.jpg", caption: "해저 탐사" },
       { src: "assets/images/tryde/coding-scenario.jpg", caption: "코딩 블록 시나리오 — 손글씨 기획" },
       { src: "assets/images/tryde/award.jpg", caption: "상장 — 부총리 겸 교육부장관상" },
+    ],
+    share: [
+      { area: "프로그래밍", value: "100%", note: "팀 4인 중 개발 1명 — 씬 흐름 · 강의실 6곳 인터랙션 · 짝꿍 로봇" },
+      { area: "기획", value: "", note: "" }, // TODO
+      { area: "아트", value: "", note: "" }, // TODO
+    ],
+    numbers: [
+      { n: "대상", label: "2023 제3회 메타버스 콘테스트 VR 부문", basis: "부총리 겸 교육부장관상" },
+      { n: "300만 원", label: "상금", basis: "팀 바다진주" },
+      { n: "6곳", label: "강의실", basis: "모두 '꽂기' 한 가지 조작으로 진행" },
+      { n: "", label: "유저 테스트 인원" }, // TODO
     ],
     results: [
       "상금 300만 원과 표창 (팀 바다진주)",
@@ -458,6 +497,17 @@ window.PROJECTS = [
       { src: "assets/images/sailors/final-core.jpg", caption: "메인 코어" },
       { src: "assets/images/sailors/instruction.jpg", caption: "체험 조작 안내서" },
     ],
+    share: [
+      { area: "개발", value: "100%", note: "2인 팀 — 퍼즐 · 컷신 · 자막 · 사운드 시스템" },
+      { area: "세계관 · 시나리오", value: "", note: "" }, // TODO
+      { area: "아트", value: "0%", note: "애니메이션 · 모델링 · 텍스쳐는 안지윤" },
+    ],
+    numbers: [
+      { n: "약 20분", label: "1인 체험 시간", basis: "체험 안내서 기준" },
+      { n: "88개", label: "회로 퍼즐 블록", basis: "회전해 맞추는 블록, 대칭 블록은 두 방향 모두 정답" },
+      { n: "24개", label: "Timeline 컷신", basis: "퍼즐 사이를 잇는 이야기 장면" },
+      { n: "", label: "졸업전시 관람객 수" }, // TODO
+    ],
     results: [
       "2024 졸업전시 출품 (팀 졸업작품)",
       "전시 현장 체험 시간 약 20분, 체험 안내서 비치",
@@ -559,6 +609,17 @@ window.PROJECTS = [
       { src: "assets/images/bulssi/ending.jpg", caption: "엔딩 — 만세운동 이후의 이야기" },
       { src: "assets/images/bulssi/question.jpg", caption: "마지막 질문" },
     ],
+    share: [
+      { area: "프로그래밍", value: "100%", note: "팀 5인 중 개발 1명 — 상호작용 · 진행 애니메이션" },
+      { area: "기획", value: "", note: "" }, // TODO
+      { area: "디자인", value: "", note: "" }, // TODO
+    ],
+    numbers: [
+      { n: "40명", label: "초등 5학년 설문 · 유저 테스트", basis: "안서초 5학년" },
+      { n: "7장면", label: "시나리오", basis: "유관순 연구소 자문" },
+      { n: "4개", label: "직접 구현한 손 인터랙션", basis: "불씨 보내기 · 태극기 그리기 · 나눠주기 · 만세" },
+      { n: "", label: "테스트 결과 (만족도 · 반응)" }, // TODO: 불씨 기획서 설문 결과
+    ],
     results: [
       "유관순 연구소 자문으로 사실 확인과 연출 방향을 다듬음",
       "천안 안서초등학교 5학년 40명 대상 유저 테스트 진행",
@@ -633,6 +694,17 @@ window.PROJECTS = [
       { src: "assets/images/nostalgia/hand-particles.jpg", caption: "손에 반응하는 입자" },
       { src: "assets/images/nostalgia/title.jpg", caption: "시작 화면" },
       { src: "assets/images/nostalgia/exhibition.jpg", caption: "졸업전시 — 디자인갤러리 부스" },
+    ],
+    share: [
+      { area: "기획 · 연출", value: "100%", note: "개인 졸업작품" },
+      { area: "개발 · VFX", value: "100%", note: "" },
+      { area: "사운드 · 영상", value: "100%", note: "" },
+    ],
+    numbers: [
+      { n: "약 8분", label: "1인 체험", basis: "VR 인터랙티브 영상" },
+      { n: "최대 70만 점", label: "LiDAR 스캔 포인트 클라우드", basis: "실제 공간을 스캔해 VFX Graph로 표현" },
+      { n: "230여 개", label: "영상에 맞춘 진동 신호", basis: "0.1초 간격 Timeline Signal" },
+      { n: "", label: "졸업전시 관람객 수" }, // TODO
     ],
     results: [
       "2024 상명대학교 AR·VR미디어디자인전공 졸업전시 출품 — 디자인갤러리 (개인 졸업작품)",

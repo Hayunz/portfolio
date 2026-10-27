@@ -375,9 +375,35 @@
            ${p.meta && p.meta.team ? `<p class="t-team">Team · ${esc(p.meta.team)}</p>` : ""}`
         : "";
 
+    // 기여도: 업무별 비중. value가 비어 있으면 로컬에서만 '확인 필요'로 보임
+    const shares = (p.share || []).filter((s) => s.value || DEV);
+    const share = shares.length
+      ? `<div class="t-share"><p class="t-share-title">기여도 · 업무별</p>${shares
+          .map((s) => {
+            const pct = parseInt(s.value, 10);
+            return `<div class="t-share-row">
+              <span>${esc(s.area)}</span>
+              ${s.value ? `<i style="--w:${isNaN(pct) ? 0 : pct}%"></i><b>${esc(s.value)}</b>` : hint("확인 필요 — 비중(%)을 채워 주세요", true)}
+              ${s.note ? `<small>${esc(s.note)}</small>` : ""}
+            </div>`;
+          })
+          .join("")}</div>`
+      : "";
+
+    // 성과 숫자: 큰 숫자 + 무엇을 셌는지(측정 기준). n이 비어 있으면 로컬에서만 안내
+    const nums = (p.numbers || []).filter((x) => x.n || DEV);
+    const numbers = nums.length
+      ? `<div class="t-numbers">${nums
+          .map((x) => x.n
+            ? `<div><strong>${esc(x.n)}</strong><span>${esc(x.label)}</span>${x.basis ? `<small>${esc(x.basis)}</small>` : ""}</div>`
+            : `<div>${hint(`${x.label}: 숫자와 근거를 채워 주세요`, true)}</div>`)
+          .join("")}</div>`
+      : "";
+
     const awards = p.award ? [p.award] : [];
-    const results = has(p.results) || awards.length
-      ? `${awards.length ? `<div class="t-laurels-row">${awards.map(laurel).join("")}</div>` : ""}
+    const results = has(p.results) || awards.length || numbers
+      ? `${numbers}
+         ${awards.length ? `<div class="t-laurels-row">${awards.map(laurel).join("")}</div>` : ""}
          ${has(p.results) ? `<ul class="results">${p.results.map((r) => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}`
       : "";
 
@@ -422,6 +448,7 @@
             <div class="prose">${p.overview ? paragraphs(p.overview) : hint("overview: 어떤 콘텐츠인지 2–3문장")}</div>
           </div>
           ${meta ? `<dl class="t-meta">${meta}</dl>` : ""}
+          ${share}
         </div></section>
 
         ${videos.length ? `<section class="t-sec"><div class="container"><p class="t-label">${videos.length > 1 ? "Videos · 영상" : "Trailer · 영상"}</p>
