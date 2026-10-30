@@ -27,6 +27,7 @@
 //   award: "",                   // 수상 내역 한 줄
 //   summary: "",                 // 카드와 상세 상단에 쓰이는 한 줄 소개
 //   roles: ["기획", "개발"],      // 내가 맡은 분야: 기획 / 개발 / 영상 / 디자인 / 운영 등
+//   focus: ["vr", "plan"],       // 내 제작 비중이 큰 분야 → 홈 탭 분류. vr = VR 개발, plan = 기획, art = 아트 · 영상
 //   tags: ["Unity", "VR"],       // 기술 · 형식
 //   cover: "",                   // 카드 썸네일 (16:9 권장, GIF/mp4 가능)
 //   youtube: "",                 // 유튜브 영상 ID 또는 주소. 있으면 상세 상단에 표시
@@ -59,6 +60,10 @@
 //   results: [],                 // 결과: 수상, 전시 장소 · 기간, 관람객 수, 반응
 //   links: [{ label: "기획서", url: "" }],
 // },
+//
+// 아카이브(홈 하단 목록)는 누르면 팝업으로 열립니다. 팝업에 꼭 들어갈 기본 내용:
+//   사진 · 영상(cover · gallery · youtube), summary, meta.period, meta.client 또는 venue,
+//   roles, contributions(내가 한 일), results(결과)
 // ────────────────────────────────────────────────────────────
 
 window.PROJECTS = [
@@ -74,6 +79,7 @@ window.PROJECTS = [
     award: "",
     summary: "아버지의 약초를 찾아 산을 오르는 아이의 꿈을, 신령의 손이 되어 손끝으로 함께 걸어가는 VR 인터랙티브 시네마",
     roles: ["개발"],
+    focus: ["vr"],
     tags: ["Unity 6", "VR", "Interactive Cinema", "Hand Tracking", "Exhibition"],
     cover: "assets/images/daydream/key-art.jpg",
     youtube: "",
@@ -196,6 +202,7 @@ window.PROJECTS = [
     summary: "바위에 봉인된 광물 생명체 '크럼비'를 손으로 조사해 깨우고, 현실의 내 방으로 데려오는 VR · MR 작품",
     standalone: true, // 지원서에 링크한 페이지: 다른 페이지로 가는 링크 없음
     roles: ["시스템 기획", "개발"],
+    focus: ["vr", "plan"],
     tags: ["Unity", "VR", "MR", "Meta Quest", "Education"],
     cover: "assets/images/crumbi/cover.jpg",
     videos: [
@@ -303,6 +310,7 @@ window.PROJECTS = [
     award: "2023 제3회 메타버스 콘테스트 VR 부문 대상 · 부총리 겸 교육부장관상",
     summary: "해수면 상승으로 바다에 잠긴 2050년, 수중 로봇을 배우는 메타버스 해양 캠퍼스",
     roles: ["개발"],
+    focus: ["vr", "plan"],
     tags: ["Unity", "VR", "Metaverse", "Education"],
     cover: "assets/images/tryde/hero.jpg",
     youtube: "",
@@ -400,6 +408,7 @@ window.PROJECTS = [
     award: "",
     summary: "침몰한 고향을 떠나 해상도시에 사는 주인공이 되어 잠수함을 수리하며 이야기를 따라가는 VR 퍼즐 게임",
     roles: ["기획", "개발", "애니메이션"],
+    focus: ["vr", "plan"],
     tags: ["Unity", "VR", "Puzzle", "Adventure"],
     cover: "assets/images/sailors/hero.jpg",
     youtube: "ndaVkLro6GU",
@@ -529,6 +538,7 @@ window.PROJECTS = [
     award: "",
     summary: "유관순 열사와 함께 3.1 만세운동을 직접 겪어 보는 핸드 트래킹 VR 역사 콘텐츠",
     roles: ["개발"],
+    focus: ["vr"],
     tags: ["Unity", "VR", "Hand Tracking", "Education"],
     cover: "assets/images/bulssi/hero.jpg",
     youtube: "",
@@ -643,6 +653,7 @@ window.PROJECTS = [
     summary: "물에 잠긴 2070년의 고향에서 가라앉기 전의 기억을 손으로 되짚는 VR 인터랙티브 영상 (개인 졸업작품)",
     standalone: true, // 지원서에 링크한 페이지: 다른 페이지로 가는 링크 없음
     roles: ["제작"],
+    focus: ["vr", "plan", "art"],
     tags: ["Unity", "VR", "Point Cloud", "Media Art"],
     cover: "assets/images/nostalgia/cover.jpg",
     videos: [{ title: "플레이 영상 (1분 26초)", youtube: "https://youtu.be/qZYtfb5D228" }],
@@ -716,26 +727,27 @@ window.PROJECTS = [
   // ── 전시 · 클라이언트 작업 ─────────────────────
   {
     id: "yeonginsan",
-    title: "영인산산림박물관 힐링 영상 · 미니게임",
+    title: "한 여름의 숲 속 · 영인산산림박물관",
     year: 2025,
     category: "client",
     featured: false,
     hidden: true, // 홈 하단 Archive에만 표시. 자료가 생기면 featured: true로 올리세요
     detail: true,
     award: "",
-    summary: "영인산산림박물관에서 상영되는 힐링 테마 영상과 미니게임",
+    summary: "영인산산림박물관에서 상영하는 시네마틱 힐링 영상. 한여름 숲을 배경으로 시간의 흐름을 따라 여행합니다",
     roles: ["영상", "개발"],
+    focus: ["art", "vr"],
     tags: ["Museum", "Video", "Mini Game"],
-    cover: "",
+    cover: "assets/images/archive/summer-forest.jpg",
     youtube: "",
-    meta: { client: "(주)요요인터렉티브 · 인턴", venue: "영인산산림박물관", period: "2025.01 – 2025.04", team: "", tools: "", platform: "" },
+    meta: { client: "(주)요요인터렉티브 · 인턴", venue: "영인산산림박물관", period: "2025.01 – 2025.04", team: "", tools: "Unity Timeline · VFX", platform: "" },
     overview: "",
     intent: "",
     flow: [],
-    contributions: ["힐링 테마 상영 영상 제작", "미니게임 로직 개발"],
+    contributions: ["기획 · 영상 제작 (기여도 90%)", "Unity Timeline으로 애니메이션과 VFX를 시간대별로 배치해 자연의 변화와 분위기를 표현", "미니게임 로직 개발"],
     features: [],
     gallery: [],
-    results: [],
+    results: ["영인산산림박물관 상영관에서 상영"],
     links: [],
   },
 
@@ -750,6 +762,7 @@ window.PROJECTS = [
     award: "",
     summary: "강릉아트센터 공연 <로스팅 드림즈>의 AR 포스터",
     roles: ["개발", "홍보"],
+    focus: ["vr"],
     tags: ["AR", "Poster"],
     cover: "",
     youtube: "",
@@ -775,6 +788,7 @@ window.PROJECTS = [
     award: "",
     summary: "충남원 대학생 서포터즈로 참여한 K컬쳐 박람회 미디어아트 전시와 영상",
     roles: ["운영", "영상"],
+    focus: ["art"],
     tags: ["Media Art", "Exhibition", "Video"],
     cover: "",
     youtube: "",
@@ -791,31 +805,40 @@ window.PROJECTS = [
 
   {
     id: "msc-vr",
-    title: "MSC 구조 구명 VR",
+    title: "ARS 조합 · MSC 구조 구명 VR",
     year: 2023,
     category: "client",
     featured: false,
     hidden: true, // 홈 하단 Archive에만 표시. 자료가 생기면 featured: true로 올리세요
     detail: true,
     award: "",
-    summary: "(재)의약바이오컨버젼스연구단의 MSC 구조 구명을 위한 VR 프로젝트",
+    summary: "VR에서 12개의 단백질 구조를 자유롭게 조합하며 다양한 형태의 단백질 구조를 만들어 보는 학습 콘텐츠. (재)의약바이오컨버젼스연구단의 MSC 구조 구명 프로젝트",
     roles: ["개발"],
-    tags: ["Unity", "VR", "Research"],
-    cover: "",
+    focus: ["vr"],
+    tags: ["Unity", "VR", "Research", "Education"],
+    cover: "assets/images/archive/ars.jpg",
+    video: "https://video.wixstatic.com/video/2e9a74_cc556f61df934c70938a0d808fe4ec8e/720p/mp4/file.mp4", // 예전 Wix 사이트 영상 (58MB라 저장소에 안 넣음)
     youtube: "",
-    meta: { client: "(재)의약바이오컨버젼스연구단", period: "2023.06 – 2023.08", team: "", tools: "Unity", platform: "" },
+    meta: { client: "(재)의약바이오컨버젼스연구단", period: "2023.06 – 2023.08", team: "5인 · 개발 2 · 디자인 3", tools: "Unity", platform: "" },
     overview: "",
     intent: "",
     flow: [],
-    contributions: ["VR 프로젝트 개발"],
+    contributions: ["개발 (기여도 60%)"],
     features: [],
     gallery: [],
     results: [],
     links: [],
   },
 
-  // ── 아카이브 — 홈 하단 목록에만 표시. youtube나 links가 있으면 그 링크로 열립니다.
-  { id: "summer-forest", title: "한 여름의 숲 속", year: 2025, category: "xr", featured: false, hidden: true, detail: false, tags: [] },
-  { id: "ars", title: "ARS 조합", year: 2023, category: "xr", featured: false, hidden: true, detail: false, tags: [] },
-  { id: "yut", title: "모두의 윷놀이", year: 2023, category: "xr", featured: false, hidden: true, detail: false, tags: [], youtube: "https://youtu.be/hco1Ki1dSUw" },
+  // ── 아카이브 — 홈 하단 목록에만 표시. 누르면 팝업 (video: 팝업 안에서 재생할 mp4 주소)
+  {
+    id: "yut", title: "모두의 윷놀이", year: 2023, category: "xr", featured: false, hidden: true, detail: false,
+    summary: "윷놀이를 하면서 파손된 유물을 복원하는 VR 콘텐츠",
+    roles: ["개발"], tags: ["Unity", "VR"],
+    cover: "assets/images/archive/yut.jpg",
+    youtube: "https://youtu.be/hco1Ki1dSUw",
+    meta: { team: "3인 · 개발 1 · 디자인 2", period: "" },
+    contributions: ["개발 (기여도 100%)"],
+    results: [],
+  },
 ];

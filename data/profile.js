@@ -3,9 +3,31 @@ window.PROFILE = {
   nameKo: "김하윤",
   nameEn: "Hayun Kim",
   role: "XR Content Creator",
-  headline: "확장된 세계에서 현존감을 느낄 수 있는 실감 콘텐츠를 만듭니다.",
+  statement: "VR 콘텐츠를 설계하고 직접 만듭니다.", // 홈 이름 바로 아래 큰 문장
+  headline: "확장된 세계에서 ==현존감==을 느낄 수 있는 실감 콘텐츠를 만듭니다.",
   // About 맨 위 자기소개. 비우면 표시 안 함. 문단은 빈 줄(\n\n)로 구분
   intro: "",
+  // 홈 첫 화면 15초 하이라이트 영상 (mp4). 비우면 대표 작품 이미지가 차례로 바뀌어요. 예: "assets/video/highlight.mp4"
+  highlightVideo: "",
+  // 홈 한 줄 소개(headline) 아래 줄글. 문단은 빈 줄(\n\n)로 구분, ==이렇게== 감싸면 형광펜. TODO: 초안이에요, 본인 말로 다듬기
+  bio:
+    "체험하는 사람이 그 세계 안에 ==정말 들어와 있다고 느끼는 순간==을 만들고 싶습니다. 그래서 이야기를 짜는 기획부터 Unity 구현, 영상 연출, 전시 현장 운영까지 ==한 작품을 처음부터 끝까지 직접== 다뤄 왔습니다.\n\n" +
+    "컨트롤러 대신 손으로 만지고, 앉은 자리에서 고개를 돌려 이야기를 따라가는 것처럼 ==기기보다 사람의 몸이 먼저 오는 인터랙션==을 고민합니다. 역사 · 과학 · 환경 같은 주제를 직접 해 보는 체험으로 바꾸는 ==교육 콘텐츠==와, 감정을 따라가는 ==인터랙티브 시네마==를 주로 만들어 왔습니다.",
+  // 홈 '기획 · 개발할 수 있는 콘텐츠'. projects: projects.js의 id (상세가 열린 작품만 링크)
+  formats: [
+    { title: "VR 인터랙티브 시네마", detail: "이야기를 따라가다 손으로 장면에 개입하는 VR 영상 체험", projects: ["daydream", "nostalgia"] },
+    { title: "교육용 VR · MR 체험", detail: "역사 · 과학 · 해양 주제를 직접 해 보며 배우는 콘텐츠", projects: ["bulssi", "crumbi", "tryde"] },
+    { title: "VR 퍼즐 · 어드벤처 게임", detail: "공간을 탐색하고 퍼즐을 풀며 이야기를 여는 게임", projects: ["sailors"] },
+    { title: "전시 · 상영 콘텐츠", detail: "박물관 상영 영상, 미디어아트 전시, AR 포스터, 체험 부스 운영", projects: ["yeonginsan", "kculture-expo", "roasting-dreams"] },
+  ],
+  // 홈 첫 화면 '주요 성과' 3칸 (영상 아래). icon: trophy · stage · people, line: 한 줄 설명
+  highlights: [
+    { icon: "trophy", label: "수상", title: "장관상 대상 2회", line: "두 수상작에서 시스템 기획과 개발 총괄을 맡았습니다." },
+    // 6회: 킨텍스 부스, DayDream 쇼케이스, 영인산산림박물관, 강릉아트센터, K컬쳐 박람회, 졸업전시
+    { icon: "stage", label: "현장", title: "관객 앞에 선 전시 6회", line: "부스 설치부터 시연 운영까지 현장을 직접 맡았습니다." },
+    // TODO: 500여 명 집계 근거(어느 전시 합산인지) 메모해 두기
+    { icon: "people", label: "검증", title: "관람객 500여 명 플레이", line: "관람객 반응과 사용자 테스트로 체험을 다듬어 왔습니다." },
+  ],
   email: "khy4450@naver.com",
   github: "", // 예: "https://github.com/아이디"
   resumePdf: "", // 예: "assets/files/resume.pdf"

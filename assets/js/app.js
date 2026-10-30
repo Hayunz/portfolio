@@ -24,8 +24,11 @@
     return m ? m[1] : v;
   }
 
+  // ==이렇게== 감싼 부분은 형광펜(<mark>)으로
+  const marked = (t) => esc(t).replace(/==(.+?)==/g, "<mark>$1</mark>");
+
   function paragraphs(text) {
-    return text.split(/\n\s*\n/).map((t) => `<p>${esc(t.trim())}</p>`).join("");
+    return text.split(/\n\s*\n/).map((t) => `<p>${marked(t.trim())}</p>`).join("");
   }
 
   // ── 공통 헤더 / 푸터 ─────────────────────────
@@ -61,6 +64,8 @@
 
   // ── 공통 조각 ─────────────────────────────────
   const CATEGORIES = { xr: "XR 콘텐츠", client: "전시 · 클라이언트" };
+  // 내 제작 비중이 큰 분야 (projects.js의 focus). 홈 Selected Work 탭과 카드 위 분류에 쓰임
+  const FOCUS = { vr: "VR 개발", plan: "기획", art: "아트 · 영상" };
 
   function cover(p) {
     return p.cover ? media(p.cover, p.title) : `<div class="cover-fallback"><span>${esc(p.title)}</span></div>`;
@@ -119,10 +124,11 @@
     const href = p.detail ? ` href="${projectUrl(p)}"` : "";
     const ap = p.award ? awardParts(p.award) : null;
     const awardShort = ap ? (ap.honor ? `${ap.rank} · ${ap.honor}` : `${ap.event} ${ap.rank}`.trim()) : "";
-    return `<${tag} class="card" data-cat="${esc(p.category)}"${href}>
+    const focus = (p.focus || []).map((k) => FOCUS[k]).filter(Boolean).join(" · ") || CATEGORIES[p.category] || "";
+    return `<${tag} class="card" data-focus="${esc((p.focus || []).join(" "))}"${href}>
       <div class="thumb">${cover(p)}</div>
       <div class="body">
-        <div class="top"><span>${esc(CATEGORIES[p.category] || "")} · ${p.year}</span>${awardShort ? `<span class="badge">${esc(awardShort)}</span>` : ""}</div>
+        <div class="top"><span>${esc(focus)} · ${p.year}</span>${awardShort ? `<span class="badge">${esc(awardShort)}</span>` : ""}</div>
         <h3>${esc(p.title)}</h3>
         ${teamLine(p)}
         ${p.summary ? `<p>${esc(p.summary)}</p>` : hint("summary: 한 줄 소개", true)}
@@ -131,39 +137,13 @@
     </${tag}>`;
   }
 
-  function filters(featured) {
-    const count = (c) => featured.filter((p) => !c || p.category === c).length;
-    const btn = (key, label) =>
-      `<button type="button" class="filter${key === "" ? " active" : ""}" data-filter="${key}" aria-pressed="${key === ""}">${label}<span>${count(key)}</span></button>`;
-    const used = Object.entries(CATEGORIES).filter(([k]) => count(k) > 0);
-    if (used.length < 2) return ""; // 분류가 하나뿐이면 탭이 의미 없으니 숨김
-    return `<div class="filters" role="group" aria-label="작업 분류">${btn("", "전체")}${used.map(([k, label]) => btn(k, label)).join("")}</div>`;
-  }
-
-  function bindFilters() {
-    const buttons = document.querySelectorAll(".filter");
-    const cards = document.querySelectorAll("#work .grid > .card");
-    buttons.forEach((b) =>
-      b.addEventListener("click", () => {
-        const key = b.dataset.filter;
-        document.querySelector("#work .grid").classList.toggle("filtered", !!key);
-        buttons.forEach((x) => {
-          x.classList.toggle("active", x === b);
-          x.setAttribute("aria-pressed", x === b);
-        });
-        let n = 0;
-        cards.forEach((c) => {
-          const show = !key || c.dataset.cat === key;
-          c.hidden = !show;
-          if (!show) return;
-          c.classList.remove("pop");
-          void c.offsetWidth; // 애니메이션 다시 시작
-          c.style.setProperty("--pd", `${Math.min(n++, 6) * 50}ms`);
-          c.classList.add("pop");
-        });
-      })
-    );
-  }
+  // 홈 '주요 성과' 아이콘 (선 아이콘, currentColor)
+  const svg = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+  const ICONS = {
+    trophy: svg('<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>'),
+    stage: svg('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="M10 8l4 2-4 2z"/>'),
+    people: svg('<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.5a5 5 0 0 1 5 5.5"/>'),
+  };
 
   function home() {
     chrome("work");
@@ -172,13 +152,32 @@
     const archive = ALL_PROJECTS.filter((p) => !p.featured).sort((a, b) => b.year - a.year);
     const byId = (id) => PROJECTS.find((p) => p.id === id && p.detail);
 
+    // 하이라이트 영상이 없으면 대표 작품 표지를 차례로 보여 줌
+    const covers = featured.filter((p) => p.cover);
+    const reel = P.highlightVideo
+      ? `<video src="${esc(P.highlightVideo)}" autoplay muted loop playsinline></video>`
+      : covers.map((p, i) => `<figure class="reel-slide${i ? "" : " on"}"><img src="${esc(p.cover)}" alt="${esc(p.title)}"><figcaption>${esc(p.title)}</figcaption></figure>`).join("") +
+        `<div class="reel-hint">${hint("highlightVideo: 15초 하이라이트 영상(mp4)을 넣으면 여기서 재생돼요", true)}</div>`;
+    const feats = (P.highlights || []).map((h) => `
+      <li><span class="feat-icon" aria-hidden="true">${ICONS[h.icon] || ""}</span>
+        <span class="feat-label">${esc(h.label)}</span><strong>${esc(h.title)}</strong>${h.line ? `<p>${esc(h.line)}</p>` : ""}</li>`).join("");
+    const chip = (id) => {
+      const p = byId(id);
+      const name = (p || ALL_PROJECTS.find((x) => x.id === id) || { title: id }).title.split(":")[0];
+      return p ? `<a class="proof" href="${projectUrl(p)}">${esc(name)}</a>` : `<span class="proof note">${esc(name)}</span>`;
+    };
+
     document.getElementById("app").innerHTML = `
       <section class="hero neon">
         <div class="neon-bg" aria-hidden="true"><i class="glow g1"></i><i class="glow g2"></i><i class="glow g3"></i><i class="grain"></i></div>
         <div class="container hero-in">
-          <p class="eyebrow">${esc(P.nameKo)} — ${esc(P.nameEn)}</p>
-          <h1 class="giant">XR Content Creator</h1>
-          <p class="headline">${esc(P.headline)}</p>
+          <p class="role-line">${esc(P.role)}</p>
+          <h1 class="giant name"><span>${esc(P.nameKo)}</span> <span class="en">${esc(P.nameEn)}</span></h1>
+          ${P.statement ? `<p class="statement">${esc(P.statement)}</p>` : ""}
+        </div>
+        <div class="container hero-grid">
+          <div class="reel">${reel}</div>
+          ${feats ? `<ol class="feats" aria-label="주요 성과">${feats}</ol>` : ""}
         </div>
         <div class="container hero-foot">
           <div class="actions">
@@ -186,14 +185,24 @@
             <a class="btn" href="about.html">About</a>
             ${P.resumePdf ? `<a class="btn" href="${esc(P.resumePdf)}" target="_blank">이력서 PDF</a>` : ""}
           </div>
-          <a class="scroll-cue" href="#work" aria-label="아래로 스크롤">Scroll</a>
+          <a class="scroll-cue" href="#profile" aria-label="아래로 스크롤">Scroll</a>
         </div>
       </section>
+
+      <section class="section profile" id="profile"><div class="container">
+        <p class="headline">${marked(P.headline)}</p>
+        ${P.bio ? `<div class="bio">${paragraphs(P.bio)}</div>` : hint("bio: 어떤 사람인지 줄글로 채워 주세요")}
+        ${has(P.formats) ? `
+        <h2 class="section-title">기획 · 개발할 수 있는 콘텐츠</h2>
+        <div class="formats">${P.formats.map((f) => `
+          <div class="format"><h3>${esc(f.title)}</h3><p>${esc(f.detail)}</p>
+            ${has(f.projects) ? `<div class="proofs">${f.projects.map(chip).join("")}</div>` : ""}</div>`).join("")}
+        </div>` : ""}
+      </div></section>
 
       <section class="section" id="work"><div class="container">
         <div class="work-head">
           <h2 class="section-title">Selected Work</h2>
-          ${filters(featured)}
         </div>
         <div class="grid">${featured.map(card).join("")}</div>
       </div></section>
@@ -203,19 +212,76 @@
         <h2 class="section-title">Archive</h2>
         <div class="list">${archive
           .map((p) => {
-            const rich = p.detail && (p.cover || has(p.features) || has(p.gallery) || p.youtube);
-            const ext = p.youtube || (p.links || []).find((l) => l.url)?.url || "";
-            const href = rich ? projectUrl(p) : ext;
             const tag = (p.tags && p.tags[0]) || CATEGORIES[p.category] || "";
-            const kind = rich ? "→" : p.youtube ? "영상 ↗" : ext ? "문서 ↗" : "";
-            const open = href ? `<a class="list-row" href="${esc(href)}"${rich ? "" : ' target="_blank" rel="noopener"'}>` : `<div class="list-row">`;
-            return `${open}<strong>${esc(p.title)}</strong>
-              <span>${esc(tag)}${tag ? " · " : ""}${p.year}${kind ? ` <i class="arrow">${kind}</i>` : ""}</span></${href ? "a" : "div"}>`;
+            return `<button type="button" class="list-row" data-arc="${esc(p.id)}"><strong>${esc(p.title)}</strong>
+              <span>${esc(tag)}${tag ? " · " : ""}${p.year} <i class="arrow">+</i></span></button>`;
           })
           .join("")}</div>
-      </div></section>` : ""}
+      </div></section>
+      <dialog class="arc-modal" aria-label="아카이브 작업"></dialog>` : ""}
     `;
-    bindFilters();
+    bindArchive();
+    const slides = document.querySelectorAll(".reel-slide");
+    if (slides.length > 1) {
+      let i = 0;
+      setInterval(() => {
+        slides[i].classList.remove("on");
+        i = (i + 1) % slides.length;
+        slides[i].classList.add("on");
+      }, 2800);
+    }
+  }
+
+  // ── 아카이브 팝업: 사진 · 영상과 기본 정보만 ──────
+  // 기본 내용(사진 · 영상, 한 줄 소개, 기간, 클라이언트 · 장소, 역할, 내가 한 일, 결과)이 비면 로컬에서만 안내 박스
+  function archiveModal(p) {
+    const m = p.meta || {};
+    // 영상이 있으면 표지는 영상 포스터로만 씀
+    const shots = [p.youtube || p.video ? "" : p.cover, ...(p.gallery || []).map((g) => g.src)].filter(Boolean);
+    const caps = Object.fromEntries((p.gallery || []).map((g) => [g.src, g.caption || ""]));
+    const vid = p.video ? `<div class="arc-video"><video src="${esc(p.video)}" controls preload="none" playsinline${p.cover ? ` poster="${esc(p.cover)}"` : ""}></video></div>` : "";
+    const yt = p.youtube ? `<div class="arc-video"><iframe src="https://www.youtube-nocookie.com/embed/${esc(youtubeId(p.youtube))}" title="${esc(p.title)}" allowfullscreen loading="lazy"></iframe></div>` : "";
+    const pics = shots.length ? `<div class="arc-shots">${shots.map((s) => `<figure>${media(s, p.title)}${caps[s] ? `<figcaption>${esc(caps[s])}</figcaption>` : ""}</figure>`).join("")}</div>` : "";
+    const row = (label, val, need) => (val ? `<dt>${label}</dt><dd>${esc(val)}</dd>` : need && DEV ? `<dt>${label}</dt><dd>${hint(need, true)}</dd>` : "");
+    const list = (items) => `<ul>${items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>`;
+    const links = (p.links || []).filter((l) => l.url);
+    const rich = p.detail && (has(p.features) || has(p.gallery) || p.overview);
+    return `
+      <button type="button" class="arc-close" aria-label="닫기">×</button>
+      <p class="arc-eyebrow">${p.year}${p.tags && p.tags.length ? ` · ${esc(p.tags.join(" · "))}` : ""}</p>
+      <h3>${esc(p.title)}</h3>
+      ${p.summary ? `<p class="arc-summary">${esc(p.summary)}</p>` : hint("summary: 한 줄 소개", true)}
+      ${yt || vid || pics ? `${yt}${vid}${pics}` : hint("cover · gallery · youtube: 사진이나 영상을 넣어 주세요", true)}
+      <dl class="arc-info">
+        ${row("기간", m.period, "meta.period: 기간")}
+        ${row(m.client ? "클라이언트" : "장소", m.client || m.venue, "meta.client 또는 venue")}
+        ${m.client ? row("장소", m.venue) : ""}
+        ${row("역할", (p.roles || []).join(" · "), "roles: 맡은 분야")}
+        ${row("인원", m.team)}
+        ${row("툴", m.tools)}
+      </dl>
+      ${has(p.contributions) ? `<h4>내가 한 일</h4>${list(p.contributions)}` : hint("contributions: 내가 한 일", true)}
+      ${has(p.results) ? `<h4>결과</h4>${list(p.results)}` : hint("results: 결과 (상영 · 전시 기간, 반응 등)", true)}
+      ${links.length || rich ? `<div class="arc-links">${rich ? `<a class="btn primary" href="${projectUrl(p)}">자세히 보기 →</a>` : ""}${links.map((l) => `<a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join("")}</div>` : ""}`;
+  }
+
+  function bindArchive() {
+    const dlg = document.querySelector(".arc-modal");
+    if (!dlg) return;
+    document.querySelectorAll("[data-arc]").forEach((b) =>
+      b.addEventListener("click", () => {
+        const p = ALL_PROJECTS.find((x) => x.id === b.dataset.arc);
+        if (!p) return;
+        dlg.innerHTML = `<div class="arc-body">${archiveModal(p)}</div>`;
+        dlg.querySelector(".arc-close").addEventListener("click", () => dlg.close());
+        dlg.showModal();
+        dlg.scrollTop = 0;
+      })
+    );
+    // 바깥(배경) 누르면 닫기
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+    // 닫으면 영상 멈춤
+    dlg.addEventListener("close", () => { if (!dlg.open) dlg.innerHTML = ""; });
   }
 
   // ── 프로젝트 상세 ─────────────────────────────
@@ -525,7 +591,7 @@
       <div class="container">
         <section class="about-hero">
           <h1>${esc(P.nameKo)} <span style="color:var(--muted);font-weight:500">${esc(P.nameEn)}</span></h1>
-          <p>${esc(P.role)} — ${esc(P.headline)}</p>
+          <p>${esc(P.role)} — ${esc(P.headline.replace(/==/g, ""))}</p>
           ${P.intro ? `<div class="about-intro">${paragraphs(P.intro)}</div>` : ""}
           <div class="actions">
             <a class="btn primary" href="mailto:${esc(P.email)}">${esc(P.email)}</a>
