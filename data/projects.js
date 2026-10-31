@@ -200,7 +200,6 @@ window.PROJECTS = [
     theme: { art: "ember", accent: "#ff7a1f", bg: "#1a0b06", text: "#fff1e6", font: "cinematic", tagline: "실험으로 성질을 알아내고, 문장으로 마음을 읽어 크럼비를 해방하라", hero: "assets/images/crumbi/key-art.jpg" },
     award: "2025 가상융합서비스 개발자 경진대회 대상 · 부총리 겸 과학기술정보통신부 장관상",
     summary: "바위에 봉인된 광물 생명체 '크럼비'를 손으로 조사해 깨우고, 현실의 내 방으로 데려오는 VR · MR 작품",
-    standalone: true, // 지원서에 링크한 페이지: 다른 페이지로 가는 링크 없음
     roles: ["시스템 기획", "개발"],
     focus: ["vr", "plan"],
     tags: ["Unity", "VR", "MR", "Meta Quest", "Education"],
@@ -651,7 +650,6 @@ window.PROJECTS = [
     theme: { art: "deep-sea", accent: "#8cc8ff", bg: "#04070f", text: "#e9f1ff", font: "batang", tagline: "", hero: "assets/images/nostalgia/hero.jpg" },
     award: "",
     summary: "물에 잠긴 2070년의 고향에서 가라앉기 전의 기억을 손으로 되짚는 VR 인터랙티브 영상 (개인 졸업작품)",
-    standalone: true, // 지원서에 링크한 페이지: 다른 페이지로 가는 링크 없음
     roles: ["제작"],
     focus: ["vr", "plan", "art"],
     tags: ["Unity", "VR", "Point Cloud", "Media Art"],

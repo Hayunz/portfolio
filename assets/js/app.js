@@ -13,6 +13,8 @@
   const has = (v) => (Array.isArray(v) ? v.length > 0 : !!v);
   const hint = (text, inline) => (DEV ? `<div class="ph${inline ? " inline" : ""}">✎ ${esc(text)}</div>` : "");
   const projectUrl = (p) => `project.html?id=${encodeURIComponent(p.id)}`;
+  // 아카이브 작품(hidden)은 상세 페이지 대신 홈 아카이브 팝업으로
+  const workUrl = (p) => (p.hidden ? `index.html#arc-${encodeURIComponent(p.id)}` : projectUrl(p));
 
   function media(src, alt) {
     if (/\.(mp4|webm)$/i.test(src)) return `<video src="${esc(src)}" autoplay muted loop playsinline></video>`;
@@ -102,7 +104,7 @@
       const left = ((start ?? end) / SPAN) * 100, width = start === null ? 0 : ((end - start + 1) / SPAN) * 100;
       const name = esc(p.title.split(/:\s*/)[0]);
       return `<div class="tl-row">
-        ${p.detail ? `<a class="tl-name" href="${projectUrl(p)}">${name}</a>` : `<span class="tl-name">${name}</span>`}
+        ${p.detail ? `<a class="tl-name" href="${workUrl(p)}">${name}</a>` : `<span class="tl-name">${name}</span>`}
         <div class="tl-track">${start === null ? `<i class="tl-dot" style="left:${left}%" title="완료 ${esc(p.meta.period)}"></i>` : `<i class="tl-bar" style="left:${left}%;width:${width}%"></i>`}</div>
       </div>`;
     });
@@ -221,6 +223,12 @@
       <dialog class="arc-modal" aria-label="아카이브 작업"></dialog>` : ""}
     `;
     bindArchive();
+    // About 등에서 index.html#arc-<id>로 오면 그 작품 팝업을 바로 연다
+    const arcId = decodeURIComponent(location.hash.replace(/^#arc-/, ""));
+    if (location.hash.startsWith("#arc-")) {
+      const row = document.querySelector(`[data-arc="${CSS.escape(arcId)}"]`);
+      if (row) { row.scrollIntoView({ block: "center" }); row.click(); }
+    }
     const slides = document.querySelectorAll(".reel-slide");
     if (slides.length > 1) {
       let i = 0;
@@ -240,7 +248,7 @@
     const shots = [p.youtube || p.video ? "" : p.cover, ...(p.gallery || []).map((g) => g.src)].filter(Boolean);
     const caps = Object.fromEntries((p.gallery || []).map((g) => [g.src, g.caption || ""]));
     const vid = p.video ? `<div class="arc-video"><video src="${esc(p.video)}" controls preload="none" playsinline${p.cover ? ` poster="${esc(p.cover)}"` : ""}></video></div>` : "";
-    const yt = p.youtube ? `<div class="arc-video"><iframe src="https://www.youtube-nocookie.com/embed/${esc(youtubeId(p.youtube))}" title="${esc(p.title)}" allowfullscreen loading="lazy"></iframe></div>` : "";
+    const yt = p.youtube ? `<div class="arc-video"><iframe src="https://www.youtube-nocookie.com/embed/${esc(youtubeId(p.youtube))}" title="${esc(p.title)}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>` : "";
     const pics = shots.length ? `<div class="arc-shots">${shots.map((s) => `<figure>${media(s, p.title)}${caps[s] ? `<figcaption>${esc(caps[s])}</figcaption>` : ""}</figure>`).join("")}</div>` : "";
     const row = (label, val, need) => (val ? `<dt>${label}</dt><dd>${esc(val)}</dd>` : need && DEV ? `<dt>${label}</dt><dd>${hint(need, true)}</dd>` : "");
     const list = (items) => `<ul>${items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>`;
@@ -572,7 +580,7 @@
       const p = ALL_PROJECTS.find((x) => x.id === id);
       if (!p) return "";
       const name = esc(p.title.split(/:\s*/)[0]);
-      return p.detail ? `<a class="proof" href="${projectUrl(p)}">${name}</a>` : `<span class="proof">${name}</span>`;
+      return p.detail ? `<a class="proof" href="${workUrl(p)}">${name}</a>` : `<span class="proof">${name}</span>`;
     };
     return `<div class="skill-table">${P.skills
       .map((g) => `<div class="skill-group"><h3>${esc(g.group)}</h3>${g.items
